@@ -35,6 +35,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 
+        //All URLs must be authenticated before they can be accessed; anon: All URLs can be accessed anonymously
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         filterChainDefinitionMap.put("/send_code", "anon");
         filterChainDefinitionMap.put("/login", "anon");
@@ -56,7 +57,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/get_group_announcement", "login");
         filterChainDefinitionMap.put("/things/add_device", "login");
         filterChainDefinitionMap.put("/things/list_device", "login");
-
+        // The main line of code must be placed at the end of all permission settings, 
+        // Otherwise it will cause all url Are all intercepted and the rest need to be authenticated
         //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截 剩余的都需要认证
         filterChainDefinitionMap.put("/**", "login");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

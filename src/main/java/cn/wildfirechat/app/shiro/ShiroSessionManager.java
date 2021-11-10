@@ -24,6 +24,7 @@ public class ShiroSessionManager extends DefaultWebSessionManager {
     protected Serializable getSessionId(ServletRequest request, ServletResponse response){
         String id = WebUtils.toHttp(request).getHeader(AUTHORIZATION);
         if(StringUtils.isEmpty(id)){
+        	// If there is no id parameter, it will be in the way of the parent class cookie Get it
             //如果没有携带id参数则按照父类的方式在cookie进行获取
             System.out.println("super："+super.getSessionId(request, response));
             return super.getSessionId(request, response);

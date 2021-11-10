@@ -35,7 +35,7 @@ public class AppController {
     }
 
     /*
-    移动端登录
+    移动端登录 - Mobile login
      */
     @PostMapping(value = "/send_code", produces = "application/json;charset=UTF-8")
     public Object sendCode(@RequestBody SendCodeRequest request) {
@@ -47,7 +47,15 @@ public class AppController {
         return mService.login(response, request.getMobile(), request.getCode(), request.getClientId(), request.getPlatform() == null ? 0 : request.getPlatform());
     }
 
-
+    /**
+     * PC scan code operation
+     * PC -> App Create a session
+     * PC -> Poll call session_login, Sign in If you have scanned the code to confirm return 
+     * token Otherwise, it returns an error code of 9 (the code has been scanned and has not been confirmed)
+     *  or 10 (the code has not been scanned yet)
+     * @param request
+     * @return
+     */
     /* PC扫码操作
     1, PC -> App     创建会话
     2, PC -> App     轮询调用session_login进行登陆，如果已经扫码确认返回token，否则返回错误码9（已经扫码还没确认)或者10(还没有被扫码)
@@ -100,9 +108,9 @@ public class AppController {
         return deferredResult;
     }
 
-    /* 手机扫码操作
-    1，扫码，调用/scan_pc接口。
-    2，调用/confirm_pc 接口进行确认
+    /* 手机扫码操作 - Mobile phone scan code operation
+    1，扫码，调用/scan_pc接口。- Scan the code and call the /scan_pc interface.
+    2，调用/confirm_pc 接口进行确认 - Call the /confirm_pc interface to confirm
      */
     @PostMapping(value = "/scan_pc/{token}", produces = "application/json;charset=UTF-8")
     public Object scanPc(@PathVariable("token") String token) {
@@ -119,7 +127,7 @@ public class AppController {
     }
 
     /*
-    修改野火账户
+    修改野火账户 - Modify wildfire account
     */
     @CrossOrigin
     @PostMapping(value = "/change_name", produces = "application/json;charset=UTF-8")
@@ -132,7 +140,7 @@ public class AppController {
 
 
     /*
-    群公告相关接口
+    群公告相关接口 - Group announcement related interface
      */
     @CrossOrigin
     @PostMapping(value = "/put_group_announcement", produces = "application/json;charset=UTF-8")
@@ -147,7 +155,7 @@ public class AppController {
     }
 
     /*
-    客户端上传协议栈日志
+    客户端上传协议栈日志 - Client upload protocol stack log
      */
     @PostMapping(value = "/logs/{userId}/upload")
     public Object uploadFiles(@RequestParam("file") MultipartFile file, @PathVariable("userId") String userId) throws IOException {
@@ -155,7 +163,7 @@ public class AppController {
     }
 
     /*
-    投诉和建议
+    投诉和建议 - Complaints and suggestions
     */
     @CrossOrigin
     @PostMapping(value = "/complain", produces = "application/json;charset=UTF-8")
@@ -164,7 +172,7 @@ public class AppController {
     }
 
     /*
-    物联网相关接口
+    物联网相关接口 - Internet of Things related interfaces
      */
     @PostMapping(value = "/things/add_device")
     public Object addDevice(@RequestBody InputCreateDevice createDevice) {
@@ -182,7 +190,7 @@ public class AppController {
     }
 
     /*
-    发送消息
+    发送消息 - send messages
      */
     @PostMapping(value = "/messages/send")
     public Object sendMessage(@RequestBody SendMessageRequest sendMessageRequest) {
@@ -190,7 +198,8 @@ public class AppController {
     }
 
     /*
-    iOS设备Share extension分享图片文件等使用
+    iOS设备Share extension分享图片文件等使用 
+    Use iOS device Share extension to share pictures, files, etc.
      */
     @PostMapping(value = "/media/upload/{media_type}")
     public Object uploadMedia(@RequestParam("file") MultipartFile file, @PathVariable("media_type") int mediaType) throws IOException {

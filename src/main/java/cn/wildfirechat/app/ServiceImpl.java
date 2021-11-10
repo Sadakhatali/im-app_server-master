@@ -196,6 +196,7 @@ public class ServiceImpl implements Service {
 
         try {
             String code = Utils.getRandomCode(4);
+            System.out.println("Code is : "+code);
             RestResult.RestCode restCode = authDataSource.insertRecord(mobile, code);
 
             if (restCode != SUCCESS) {
